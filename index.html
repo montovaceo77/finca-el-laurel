@@ -106,6 +106,18 @@ footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);back
 @media (max-width:520px){
   .feats-list{grid-template-columns:1fr;}
 }
+.galeria-bg{background:var(--crema);}
+.galeria-scroll{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch;}
+.galeria-scroll::-webkit-scrollbar{height:6px;}
+.galeria-scroll::-webkit-scrollbar-thumb{background:var(--gris-c);border-radius:10px;}
+.galeria-item{flex:0 0 auto;width:78%;max-width:420px;scroll-snap-align:start;border-radius:14px;overflow:hidden;border:1px solid var(--gris-c);}
+.galeria-item img{width:100%;height:280px;object-fit:cover;display:block;}
+@media (min-width:700px){
+  .galeria-item{width:calc(50% - 8px);}
+}
+@media (min-width:1000px){
+  .galeria-item{width:calc(25% - 12px);}
+}
 </style>
 </head>
 <body>
@@ -170,8 +182,19 @@ footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);back
   </div>
 </section>
 
+<section class="galeria-bg">
+  <div class="section-tag">Galería</div>
+  <h2 class="section-title">Un vistazo más a la finca</h2>
+  <div class="galeria-scroll">
+    <div class="galeria-item fade-up d1"><img src="images/Imagen%201.png" alt="Foto de la finca 1"></div>
+    <div class="galeria-item fade-up d2"><img src="images/Imagen%202.png" alt="Foto de la finca 2"></div>
+    <div class="galeria-item fade-up d3"><img src="images/Imagen%203.png" alt="Foto de la finca 3"></div>
+    <div class="galeria-item fade-up d4"><img src="images/Imagen%204.png" alt="Foto de la finca 4"></div>
+  </div>
+</section>
+
 <section class="vuelo">
-  <video class="vuelo-video" loop playsinline id="vueloVideo">
+  <video class="vuelo-video" playsinline id="vueloVideo">
     <source src="Video%201.%20Laurel.mp4" type="video/mp4">
   </video>
   <div class="vuelo-scrim"></div>
@@ -209,6 +232,13 @@ footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);back
     setTimeout(()=>{if(!vueloVideo.paused){vueloScrim.classList.add('is-faded');vueloContent.classList.add('is-faded');}},3500);
   });
   vueloVideo.addEventListener('pause',()=>{
+    vueloPlayBtn.classList.remove('is-playing');
+    vueloPlayIcon.innerHTML=PLAY_ICON;
+    vueloScrim.classList.remove('is-faded');
+    vueloContent.classList.remove('is-faded');
+  });
+  vueloVideo.addEventListener('ended',()=>{
+    vueloVideo.currentTime=0;
     vueloPlayBtn.classList.remove('is-playing');
     vueloPlayIcon.innerHTML=PLAY_ICON;
     vueloScrim.classList.remove('is-faded');
