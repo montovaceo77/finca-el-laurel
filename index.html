@@ -513,7 +513,6 @@
 
 <section class="terreno">
   <h2 class="section-heading">Recorrer la finca</h2>
-  <div class="section-rule"></div>
 
   <div class="terreno-layout">
     <div>
@@ -610,7 +609,6 @@
 </section>
 
 <section class="infra">
-  <div class="section-eyebrow">Infraestructura</div>
   <h2 class="section-heading">Comodidad sin depender de nada externo</h2>
   <div class="section-rule"></div>
   <p class="infra-sub">Los servicios básicos ya están resueltos en las cuatro viviendas.</p>
@@ -643,7 +641,7 @@
 </section>
 
 <section class="vuelo">
-  <video class="vuelo-video" muted loop playsinline id="vueloVideo">
+  <video class="vuelo-video" loop playsinline id="vueloVideo">
     <source src="Video%201.%20Laurel.mp4" type="video/mp4">
   </video>
   <div class="vuelo-scrim"></div>
@@ -652,13 +650,7 @@
     <svg id="vueloPlayIcon" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
   </button>
 
-  <button class="vuelo-sound" onclick="const v=document.getElementById('vueloVideo'); v.muted=!v.muted; this.querySelector('span').textContent = v.muted ? 'Activar sonido' : 'Silenciar';">
-    <svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 010 7"/><path d="M18 6a9 9 0 010 12"/></svg>
-    <span>Activar sonido</span>
-  </button>
-
   <div class="vuelo-content" id="vueloContent">
-    <div class="section-eyebrow">Ubicación</div>
     <h2 class="section-heading">Ubicación estratégica</h2>
     <div class="section-rule"></div>
     <ul class="vuelo-list">
