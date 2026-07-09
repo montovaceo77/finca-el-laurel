@@ -111,7 +111,12 @@ footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);back
 .galeria-scroll::-webkit-scrollbar{height:6px;}
 .galeria-scroll::-webkit-scrollbar-thumb{background:var(--gris-c);border-radius:10px;}
 .galeria-item{flex:0 0 auto;width:78%;max-width:420px;scroll-snap-align:start;border-radius:14px;overflow:hidden;border:1px solid var(--gris-c);}
-.galeria-item img{width:100%;height:280px;object-fit:cover;display:block;}
+.galeria-item img{width:100%;height:280px;object-fit:contain;background:var(--verde);display:block;cursor:zoom-in;}
+
+.lightbox{display:none;position:fixed;inset:0;background:rgba(10,20,10,0.92);z-index:99999;align-items:center;justify-content:center;padding:30px;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:100%;max-height:100%;border-radius:8px;}
+.lightbox-close{position:absolute;top:20px;right:24px;color:#fff;font-size:32px;background:none;border:none;cursor:pointer;line-height:1;}
 @media (min-width:700px){
   .galeria-item{width:calc(50% - 8px);}
 }
@@ -186,10 +191,14 @@ footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);back
   <div class="section-tag">Galería</div>
   <h2 class="section-title">Un vistazo más a la finca</h2>
   <div class="galeria-scroll">
-    <div class="galeria-item fade-up d1"><img src="images/Imagen%201.png" alt="Foto de la finca 1"></div>
-    <div class="galeria-item fade-up d2"><img src="images/Imagen%202.png" alt="Foto de la finca 2"></div>
-    <div class="galeria-item fade-up d3"><img src="images/Imagen%203.png" alt="Foto de la finca 3"></div>
-    <div class="galeria-item fade-up d4"><img src="images/Imagen%204.png" alt="Foto de la finca 4"></div>
+    <div class="galeria-item fade-up d1"><img src="images/Imagen%201.png" alt="Foto de la finca 1" onclick="openLightbox(this.src)"></div>
+    <div class="galeria-item fade-up d2"><img src="images/Imagen%202.png" alt="Foto de la finca 2" onclick="openLightbox(this.src)"></div>
+    <div class="galeria-item fade-up d3"><img src="images/Imagen%203.png" alt="Foto de la finca 3" onclick="openLightbox(this.src)"></div>
+    <div class="galeria-item fade-up d4"><img src="images/Imagen%204.png" alt="Foto de la finca 4" onclick="openLightbox(this.src)"></div>
+  </div>
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightbox-img" src="" alt="Foto ampliada">
   </div>
 </section>
 
@@ -215,6 +224,14 @@ footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);back
 <footer>© 2026 El Laurel · La Unión, Antioquia, Colombia</footer>
 
 <script>
+  function openLightbox(src){
+    document.getElementById('lightbox-img').src=src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
   const vueloVideo=document.getElementById('vueloVideo');
   const vueloPlayBtn=document.getElementById('vueloPlayBtn');
   const vueloPlayIcon=document.getElementById('vueloPlayIcon');
