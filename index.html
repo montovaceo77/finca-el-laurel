@@ -9,15 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Alice&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --forest-dark: #1a2e22;
-    --forest: #24402e;
-    --forest-light: #3a5a42;
-    --copper: #b5652d;
-    --copper-light: #d4854f;
-    --gold: #c9a24b;
-    --cream: #f2ede2;
-    --cream-dim: #d9d2c1;
-    --charcoal: #16181a;
+    --forest-dark: #2b3d33;
+    --forest: #4a6355;
+    --forest-light: #6b8878;
+    --copper: #b08256;
+    --copper-light: #cda37a;
+    --gold: #bfa877;
+    --water: #6f93a0;
+    --cream: #f6f2e8;
+    --cream-dim: #ded6c3;
+    --charcoal: #2a352f;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -474,7 +475,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--bullet-color, var(--gold));
     flex-shrink: 0;
     transform: translateY(-2px);
   }
@@ -538,17 +539,17 @@
 
     <div class="feature-item">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M2 15c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M2 19c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/></svg>
+        <svg viewBox="0 0 24 24" style="stroke: var(--water);"><path d="M2 15c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M2 19c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/></svg>
       </div>
       <div class="feature-text">
-        <div class="stat-number">2 <span>ríos</span> + 2 <span>arroyos</span></div>
+        <div class="stat-number">2 <span style="color: var(--water);">ríos</span> + 2 <span style="color: var(--water);">arroyos</span></div>
         <div class="stat-label">Fuentes de agua que atraviesan la finca</div>
       </div>
     </div>
 
     <div class="feature-item">
       <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/></svg>
+        <svg viewBox="0 0 24 24" style="stroke: var(--water);"><path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/></svg>
       </div>
       <div class="feature-text">
         <div class="stat-number">~15</div>
@@ -618,7 +619,7 @@
   <div class="infra-grid">
     <div class="infra-item">
       <div class="infra-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2C9 6 6 9.5 6 13a6 6 0 0012 0c0-3.5-3-7-6-11z"/><path d="M9 14a3 3 0 003 3"/></svg>
+        <svg viewBox="0 0 24 24" style="stroke: var(--water);"><path d="M12 2C9 6 6 9.5 6 13a6 6 0 0012 0c0-3.5-3-7-6-11z"/><path d="M9 14a3 3 0 003 3"/></svg>
       </div>
       <h3>Acueducto veredal</h3>
       <p>5 puestos de acueducto veredal abastecen la finca de forma continua.</p>
@@ -658,7 +659,7 @@
     <ul class="vuelo-list">
       <li>La Unión, Antioquia.</li>
       <li>Aproximadamente 2 horas de Medellín.</li>
-      <li>Entorno de alta riqueza hídrica.</li>
+      <li style="--bullet-color: var(--water);">Entorno de alta riqueza hídrica.</li>
       <li>Fácil acceso por carretera.</li>
     </ul>
   </div>
