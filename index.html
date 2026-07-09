@@ -50,12 +50,12 @@ section{padding:80px 40px;max-width:1100px;margin:0 auto;}
 .fade-up.vis{opacity:1;transform:none;}
 .fade-up.d1{transition-delay:0.05s;}.fade-up.d2{transition-delay:0.1s;}.fade-up.d3{transition-delay:0.15s;}.fade-up.d4{transition-delay:0.2s;}
 
-.terreno-bg{background:var(--blanco);}
-.terreno-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start;}
+.terreno-bg{background:var(--crema);}
+.terreno-grid{display:flex;flex-direction:column;gap:36px;}
 .terreno-map{border-radius:14px;overflow:hidden;border:1px solid var(--gris-c);}
 .terreno-map img{width:100%;height:auto;display:block;}
-.feats-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.feat-card{background:var(--crema);border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;border:1px solid transparent;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;}
+.feats-list{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.feat-card{background:var(--blanco);border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;border:1px solid var(--gris-c);transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;}
 .feat-card:hover{border-color:var(--terra-c);transform:translateY(-3px);box-shadow:0 8px 24px rgba(193,98,42,0.1);}
 .feat-card.water:hover{border-color:var(--agua-c);box-shadow:0 8px 24px rgba(62,124,137,0.12);}
 .feat-icon{width:36px;height:36px;background:var(--verde);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
@@ -98,11 +98,13 @@ section{padding:80px 40px;max-width:1100px;margin:0 auto;}
 footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);background:var(--crema);}
 
 @media (max-width:900px){
-  .terreno-grid{grid-template-columns:1fr;}
-  .feats-list{grid-template-columns:1fr;}
+  .feats-list{grid-template-columns:repeat(2,1fr);}
   .specs-grid{grid-template-columns:1fr;}
   .ubi-grid{grid-template-columns:repeat(2,1fr);}
   .nav-links{display:none;}
+}
+@media (max-width:520px){
+  .feats-list{grid-template-columns:1fr;}
 }
 </style>
 </head>
