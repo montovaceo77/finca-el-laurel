@@ -1,662 +1,173 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Laurel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Alice&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>El Laurel · La Unión, Antioquia</title>
 <style>
-  :root {
-    --forest-dark: #2b3d33;
-    --forest: #4a6355;
-    --forest-light: #6b8878;
-    --copper: #b08256;
-    --copper-light: #cda37a;
-    --gold: #bfa877;
-    --water: #6f93a0;
-    --cream: #f6f2e8;
-    --cream-dim: #ded6c3;
-    --charcoal: #2a352f;
-  }
+:root{
+  --verde:#1A2E1A;--verde-m:#2D5A27;--verde-c:#4A7C3F;
+  --terra:#C1622A;--terra-c:#E8825A;
+  --agua:#3E7C89;--agua-c:#6FAEBB;
+  --crema:#F5F0E8;--blanco:#FFFFFF;--gris:#6B7280;--gris-c:#E8EDE8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--crema);color:var(--verde);}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(26,46,26,0.96);backdrop-filter:blur(8px);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px;transition:box-shadow 0.3s;}
+nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.3);}
+.nav-logo{color:#fff;font-size:15px;font-weight:600;}
+.nav-logo span{color:var(--terra-c);}
+.nav-links{display:flex;gap:6px;}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:12px;padding:6px 14px;border-radius:20px;transition:all 0.2s;}
+.nav-links a:hover{background:rgba(255,255,255,0.1);color:#fff;}
 
-  html { scroll-behavior: smooth; }
+.hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;padding-bottom:80px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:var(--verde);overflow:hidden;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 55%;opacity:0.75;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(170deg,rgba(26,46,26,0.75) 0%,rgba(26,46,26,0.4) 45%,rgba(10,20,10,0.55) 100%);}
+.hero-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 40px;width:100%;}
+.hero-badge{display:inline-block;background:var(--terra);color:#fff;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:6px 18px;border-radius:20px;margin-bottom:20px;}
+.hero-title{font-size:clamp(38px,7vw,80px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:16px;text-shadow:0 2px 20px rgba(0,0,0,0.3);}
+.hero-title em{color:var(--terra-c);font-style:normal;}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.85);margin-bottom:40px;text-shadow:0 1px 8px rgba(0,0,0,0.3);max-width:52ch;}
+.hero-stats{display:flex;gap:14px;flex-wrap:wrap;}
+.stat-card{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.22);border-radius:14px;padding:16px 22px;text-align:center;backdrop-filter:blur(8px);transition:transform 0.2s,background 0.2s;}
+.stat-card:hover{transform:translateY(-4px);background:rgba(255,255,255,0.2);}
+.stat-num{font-size:32px;font-weight:700;color:var(--terra-c);line-height:1;}
+.stat-num.water{color:var(--agua-c);}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.65);margin-top:4px;line-height:1.4;}
+.scroll-hint{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.45);font-size:12px;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
 
-  body {
-    background: var(--charcoal);
-    color: var(--cream);
-    font-family: 'Open Sans', sans-serif;
-    overflow-x: hidden;
-  }
+section{padding:80px 40px;max-width:1100px;margin:0 auto;}
+.section-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--terra);margin-bottom:12px;}
+.section-title{font-size:clamp(24px,3.5vw,36px);font-weight:700;color:var(--verde);margin-bottom:8px;line-height:1.15;}
+.section-sub{font-size:14px;color:var(--gris);line-height:1.7;margin-bottom:36px;}
 
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    background:
-      linear-gradient(180deg, rgba(22,24,26,0.45) 0%, rgba(22,24,26,0.5) 50%, rgba(22,24,26,0.93) 100%),
-      url('images/terreno-vista.png');
-    background-size: cover;
-    background-position: center 60%;
-    padding: 0 6vw 6vw;
-  }
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.fade-up.vis{opacity:1;transform:none;}
+.fade-up.d1{transition-delay:0.05s;}.fade-up.d2{transition-delay:0.1s;}.fade-up.d3{transition-delay:0.15s;}.fade-up.d4{transition-delay:0.2s;}
 
-  /* pine tree — signature motif, sober single line-weight */
-  .laurel-mark {
-    position: absolute;
-    top: 8vh;
-    right: 6vw;
-    width: clamp(120px, 15vw, 220px);
-    z-index: 1;
-    opacity: 0.85;
-    pointer-events: none;
-  }
-  .laurel-mark svg { width: 100%; height: auto; overflow: visible; }
-  .laurel-mark path, .laurel-mark line {
-    fill: none;
-    stroke: var(--gold);
-    stroke-width: 1.1;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+.terreno-bg{background:var(--blanco);}
+.terreno-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start;}
+.terreno-map{border-radius:14px;overflow:hidden;border:1px solid var(--gris-c);}
+.terreno-map iframe{width:100%;height:420px;border:none;display:block;}
+.map-fullscreen-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;color:var(--terra);text-decoration:none;font-weight:600;}
+.map-fullscreen-link:hover{color:var(--terra-c);}
+.feats-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.feat-card{background:var(--crema);border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;border:1px solid transparent;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;}
+.feat-card:hover{border-color:var(--terra-c);transform:translateY(-3px);box-shadow:0 8px 24px rgba(193,98,42,0.1);}
+.feat-card.water:hover{border-color:var(--agua-c);box-shadow:0 8px 24px rgba(62,124,137,0.12);}
+.feat-icon{width:36px;height:36px;background:var(--verde);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.feat-icon.water{background:var(--agua);}
+.feat-title{font-size:13px;font-weight:700;color:var(--verde);margin-bottom:2px;}
+.feat-desc{font-size:11px;color:var(--gris);line-height:1.5;}
 
-  @media (max-width: 640px) {
-    .laurel-mark { top: 5vh; width: 26vw; opacity: 0.7; }
-  }
+.comodidad-bg{background:var(--verde);}
+.comodidad-bg .section-title{color:#fff;}
+.comodidad-bg .section-sub{color:rgba(255,255,255,0.6);}
+.specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.spec-row{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px 18px;transition:background 0.2s;}
+.spec-row:hover{background:rgba(255,255,255,0.12);}
+.spec-icon{font-size:22px;flex-shrink:0;}
+.spec-label{font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:2px;}
+.spec-val{font-size:13px;font-weight:600;color:#fff;}
 
-  .hero-eyebrow {
-    position: relative;
-    z-index: 1;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.4rem;
-    font-weight: 500;
-  }
+.ubicacion-bg{background:var(--crema);}
+.ubi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.ubi-card{background:var(--blanco);border:1px solid var(--gris-c);border-radius:14px;padding:20px 14px;text-align:center;transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;}
+.ubi-card:hover{transform:translateY(-5px);box-shadow:0 10px 24px rgba(0,0,0,0.08);border-color:var(--terra);}
+.ubi-icon{font-size:22px;margin-bottom:8px;display:block;}
+.ubi-text{font-size:12px;font-weight:600;color:var(--verde);line-height:1.4;}
 
-  .hero-title {
-    position: relative;
-    z-index: 1;
-    font-family: 'Alice', serif;
-    font-weight: 400;
-    font-size: clamp(2.8rem, 8vw, 6rem);
-    line-height: 1.12;
-    letter-spacing: 0.005em;
-    color: var(--cream);
-    max-width: 17ch;
-  }
+.vuelo{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 40px 60px;overflow:hidden;background:var(--verde);max-width:none;}
+.vuelo-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--verde);z-index:0;}
+.vuelo-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,20,10,0.35) 0%,rgba(10,20,10,0.4) 55%,rgba(10,20,10,0.85) 100%);transition:opacity 1s ease;}
+.vuelo-scrim.is-faded{opacity:0;}
+.vuelo-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;width:100%;transition:opacity 1s ease;pointer-events:none;}
+.vuelo-content.is-faded{opacity:0;}
+.vuelo-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:64px;height:64px;border-radius:50%;border:1px solid rgba(255,255,255,0.4);background:rgba(0,0,0,0.25);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0.9;transition:opacity 0.3s ease,border-color 0.3s ease,background 0.3s ease;}
+.vuelo-play:hover{border-color:var(--terra-c);background:rgba(0,0,0,0.4);opacity:1;}
+.vuelo-play svg{width:22px;height:22px;fill:#fff;stroke:none;}
+.vuelo-play.is-playing{opacity:0;pointer-events:none;}
+.vuelo:hover .vuelo-play.is-playing{opacity:0.6;pointer-events:auto;}
+.vuelo-more-link{display:flex;width:fit-content;align-items:center;gap:0.5rem;margin-top:20px;font-size:13px;color:var(--terra-c);text-decoration:none;border-bottom:1px solid rgba(232,130,90,0.4);padding-bottom:3px;pointer-events:auto;transition:border-color 0.3s ease,color 0.3s ease;}
+.vuelo-more-link:hover{color:#fff;border-color:#fff;}
+.vuelo-more-link svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5;}
 
-  .hero-title em {
-    font-style: italic;
-    color: var(--copper-light);
-  }
+footer{text-align:center;padding:28px 20px;font-size:11px;color:var(--gris);background:var(--crema);}
 
-  .hero-sub {
-    position: relative;
-    z-index: 1;
-    margin-top: 1.8rem;
-    font-family: 'Open Sans', sans-serif;
-    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-    font-style: normal;
-    font-weight: 300;
-    color: var(--cream-dim);
-    max-width: 38ch;
-    line-height: 1.6;
-  }
-
-  .hero-location {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 2.4rem;
-    font-size: 0.95rem;
-    color: var(--cream-dim);
-  }
-
-  .hero-location svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-  .scroll-cue {
-    position: absolute;
-    bottom: 2.4rem;
-    right: 6vw;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--cream-dim);
-    opacity: 0.7;
-  }
-
-  .scroll-cue .line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(180deg, var(--gold), transparent);
-    animation: pulse-line 2.4s ease-in-out infinite;
-  }
-
-  @keyframes pulse-line {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.15); }
-  }
-
-  @media (max-width: 640px) {
-    .hero { padding: 0 6vw 10vw; }
-    .scroll-cue { display: none; }
-  }
-
-  /* === Terreno section === */
-  .terreno {
-    position: relative;
-    background: var(--charcoal);
-    padding: 9rem 6vw 8rem;
-    overflow: hidden;
-  }
-
-  .section-eyebrow {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 500;
-  }
-
-  .section-heading {
-    font-family: 'Alice', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400;
-    color: var(--cream);
-    margin-top: 0.9rem;
-    max-width: 16ch;
-  }
-
-  .section-rule {
-    width: 56px;
-    height: 1px;
-    background: var(--gold);
-    margin-top: 1.8rem;
-    opacity: 0.7;
-  }
-
-  .terreno-layout {
-    margin-top: 4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
-  }
-
-  .terreno-photo {
-    border: 1px solid rgba(217,210,193,0.18);
-    padding: 0.6rem;
-    border-radius: 4px;
-  }
-
-  .terreno-photo img,
-  .terreno-photo iframe {
-    width: 100%;
-    display: block;
-    border-radius: 2px;
-    border: none;
-    height: clamp(320px, 45vw, 520px);
-  }
-
-  .terreno-photo-caption {
-    margin-top: 0.9rem;
-    padding: 0 0.4rem;
-    font-size: 0.85rem;
-    color: var(--cream-dim);
-    font-style: italic;
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  .feature-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.1rem 1.6rem;
-  }
-
-  @media (max-width: 720px) {
-    .feature-list { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 900px) {
-    .terreno-layout { gap: 2.5rem; }
-  }
-
-  .feature-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.3rem;
-    padding: 1.4rem 1.6rem;
-    border: 1px solid rgba(217,210,193,0.14);
-    border-radius: 4px;
-    background: rgba(242,237,226,0.02);
-    transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
-  }
-
-  .feature-item:hover {
-    transform: translateY(-5px);
-    border-color: rgba(201,162,75,0.5);
-    background: rgba(181,101,45,0.06);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.3);
-  }
-
-  .feature-icon {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-  }
-  .feature-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: none;
-    stroke: var(--copper-light);
-    stroke-width: 1.3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .feature-text .stat-number {
-    font-family: 'Alice', serif;
-    font-size: 1.65rem;
-    color: var(--cream);
-    line-height: 1.15;
-  }
-
-  .feature-text .stat-number span {
-    color: var(--gold);
-    font-size: 0.95rem;
-    font-family: 'Open Sans', sans-serif;
-    margin-left: 0.15rem;
-  }
-
-  .feature-text .stat-label {
-    margin-top: 0.3rem;
-    font-size: 0.88rem;
-    color: var(--cream-dim);
-    line-height: 1.4;
-  }
-
-  @media (max-width: 520px) {
-    .terreno { padding: 6rem 6vw 5rem; }
-    .terreno-layout { margin-top: 3rem; }
-  }
-
-  /* === Infraestructura section === */
-  .infra {
-    position: relative;
-    background: var(--cream);
-    color: var(--charcoal);
-    padding: 8rem 6vw;
-  }
-
-  .infra .section-eyebrow { color: var(--copper); }
-  .infra .section-heading { color: var(--forest-dark); }
-  .infra .section-rule { background: var(--copper); }
-
-  .infra-sub {
-    margin-top: 1.6rem;
-    font-size: 1.05rem;
-    color: #5a5548;
-    max-width: 46ch;
-    line-height: 1.6;
-    font-weight: 300;
-  }
-
-  .infra-grid {
-    margin-top: 4rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-  }
-
-  .infra-item {
-    border-top: 1px solid rgba(36,64,46,0.25);
-    padding-top: 1.6rem;
-  }
-
-  .infra-icon {
-    width: 34px;
-    height: 34px;
-    margin-bottom: 1.3rem;
-  }
-  .infra-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: none;
-    stroke: var(--forest);
-    stroke-width: 1.3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .infra-item h3 {
-    font-family: 'Alice', serif;
-    font-weight: 400;
-    font-size: 1.35rem;
-    color: var(--forest-dark);
-  }
-
-  .infra-item p {
-    margin-top: 0.6rem;
-    font-size: 0.95rem;
-    color: #5a5548;
-    line-height: 1.55;
-  }
-
-  @media (max-width: 720px) {
-    .infra-grid { grid-template-columns: 1fr; gap: 2.4rem; }
-  }
-
-  @media (max-width: 520px) {
-    .infra { padding: 6rem 6vw; }
-    .infra-grid { margin-top: 3rem; }
-  }
-
-  /* === Video section (cinematic full-bleed) === */
-  .vuelo {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 6vw 6vw;
-    overflow: hidden;
-    background: var(--charcoal);
-  }
-
-  .vuelo-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: var(--charcoal);
-    z-index: 0;
-  }
-
-  .vuelo-scrim {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(180deg, rgba(22,24,26,0.25) 0%, rgba(22,24,26,0.35) 45%, rgba(22,24,26,0.92) 100%);
-    transition: opacity 1s ease;
-  }
-  .vuelo-scrim.is-faded { opacity: 0; }
-
-  .vuelo-sound {
-    position: absolute;
-    top: 2.4rem;
-    right: 6vw;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: rgba(22,24,26,0.5);
-    border: 1px solid rgba(242,237,226,0.3);
-    color: var(--cream);
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-    padding: 0.6rem 1.1rem;
-    border-radius: 30px;
-    cursor: pointer;
-    backdrop-filter: blur(4px);
-    transition: border-color 0.3s ease, background 0.3s ease;
-  }
-  .vuelo-sound:hover { border-color: var(--gold); background: rgba(22,24,26,0.75); }
-  .vuelo-sound svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
-
-  .vuelo-play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    border: 1px solid rgba(242,237,226,0.4);
-    background: rgba(22,24,26,0.25);
-    backdrop-filter: blur(3px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0.85;
-    transition: opacity 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-  }
-  .vuelo-play:hover { border-color: var(--gold); background: rgba(22,24,26,0.4); opacity: 1; }
-  .vuelo-play svg { width: 22px; height: 22px; fill: var(--cream); stroke: none; }
-
-  .vuelo-play.is-playing { opacity: 0; pointer-events: none; }
-  .vuelo:hover .vuelo-play.is-playing { opacity: 0.6; pointer-events: auto; }
-
-  .vuelo-content {
-    position: relative;
-    z-index: 2;
-    transition: opacity 1s ease;
-    pointer-events: none;
-  }
-  .vuelo-content.is-faded { opacity: 0; }
-
-  .vuelo-list {
-    margin-top: 1.8rem;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .vuelo-list li {
-    font-size: 1.05rem;
-    color: var(--cream-dim);
-    font-weight: 300;
-    display: flex;
-    align-items: baseline;
-    gap: 0.8rem;
-  }
-
-  .vuelo-list li::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--bullet-color, var(--gold));
-    flex-shrink: 0;
-    transform: translateY(-2px);
-  }
-
-  .vuelo-more-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1.8rem;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.92rem;
-    color: var(--gold);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(191,168,119,0.4);
-    padding-bottom: 0.2rem;
-    pointer-events: auto;
-    transition: border-color 0.3s ease, color 0.3s ease;
-  }
-  .vuelo-more-link:hover { color: var(--cream); border-color: var(--cream); }
-  .vuelo-more-link svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.5; }
-
-  @media (max-width: 520px) {
-    .vuelo { padding: 0 6vw 4rem; }
-    .vuelo-sound { top: 1.6rem; font-size: 0.72rem; padding: 0.5rem 0.9rem; }
-  }
+@media (max-width:900px){
+  .terreno-grid{grid-template-columns:1fr;}
+  .feats-list{grid-template-columns:1fr;}
+  .specs-grid{grid-template-columns:1fr;}
+  .ubi-grid{grid-template-columns:repeat(2,1fr);}
+  .nav-links{display:none;}
+}
 </style>
 </head>
 <body>
 
+<nav id="main-nav">
+  <div class="nav-logo">La Unión, <span>Antioquia, Colombia</span></div>
+  <div class="nav-links">
+    <a href="#terreno">Recorrer la finca</a>
+    <a href="#comodidad">Comodidad y ubicación</a>
+  </div>
+</nav>
+
 <section class="hero">
-  <div class="laurel-mark">
-    <svg viewBox="0 0 140 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M15,182 L30,168 L42,180 L55,162 L70,178 L85,162 L98,180 L110,168 L125,182 L70,105 Z"/>
-      <path d="M35,132 L48,120 L58,130 L70,116 L82,130 L92,120 L105,132 L70,68 Z"/>
-      <path d="M52,72 L61,62 L70,72 L79,62 L88,72 L70,24 Z"/>
-      <line x1="70" y1="183" x2="70" y2="208"/>
-    </svg>
+  <div class="hero-bg"><img src="images/Portada%20laurel.png" alt="Vista aérea de El Laurel"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">El Laurel</div>
+    <h1 class="hero-title">Una finca de bosque <em>y agua</em></h1>
+    <p class="hero-sub">Un espacio donde la naturaleza y la infraestructura conviven en equilibrio.</p>
+    <div class="hero-stats">
+      <div class="stat-card"><div class="stat-num">~220</div><div class="stat-label">Cuadras<br>totales</div></div>
+      <div class="stat-card"><div class="stat-num water">2+2</div><div class="stat-label">Ríos y<br>arroyos</div></div>
+      <div class="stat-card"><div class="stat-num water">~15</div><div class="stat-label">Afloramientos<br>de agua</div></div>
+      <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Viviendas<br>en total</div></div>
+    </div>
   </div>
+  <div class="scroll-hint">↓ Explorar</div>
+</section>
 
-  <div class="hero-eyebrow">La Unión, Antioquia</div>
-
-  <h1 class="hero-title">Una finca de bosque, agua<br><em>y silencio</em></h1>
-  <p class="hero-sub">Un espacio donde la naturaleza y la infraestructura conviven en equilibrio.</p>
-
-  <div class="hero-location">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-    Ubicada en La Unión, Antioquia — a 2 horas de Medellín
-  </div>
-
-  <div class="scroll-cue">
-    <span>Explorar</span>
-    <div class="line"></div>
+<section class="terreno-bg" id="terreno">
+  <div class="section-tag">El terreno</div>
+  <h2 class="section-title">Recorrer la finca</h2>
+  <p class="section-sub">Un vistazo al mapa real de la propiedad y a lo que la tierra ya ofrece.</p>
+  <div class="terreno-grid">
+    <div class="terreno-map fade-up">
+      <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1POAT60exgo4d6h5s6fh3LSFdFNfBocg&ehbc=2E312F" loading="lazy" title="Mapa interactivo de El Laurel"></iframe>
+    </div>
+    <a class="map-fullscreen-link" href="https://www.google.com/maps/d/viewer?mid=1POAT60exgo4d6h5s6fh3LSFdFNfBocg" target="_blank" rel="noopener">↗ Abrir mapa a pantalla completa</a>
+    <div class="feats-list">
+      <div class="feat-card fade-up d1"><div class="feat-icon">🌿</div><div><div class="feat-title">~220 cuadras</div><div class="feat-desc">Extensión total de la finca.</div></div></div>
+      <div class="feat-card water fade-up d1"><div class="feat-icon water">💧</div><div><div class="feat-title">2 ríos + 2 arroyos</div><div class="feat-desc">Fuentes de agua que atraviesan la finca.</div></div></div>
+      <div class="feat-card water fade-up d2"><div class="feat-icon water">💧</div><div><div class="feat-title">~15 afloramientos</div><div class="feat-desc">Puntos de agua identificados en el predio.</div></div></div>
+      <div class="feat-card fade-up d2"><div class="feat-icon">🌲</div><div><div class="feat-title">~100 cuadras en bosque</div><div class="feat-desc">Pino patula, eucalipto y ciprés.</div></div></div>
+      <div class="feat-card fade-up d3"><div class="feat-icon">✅</div><div><div class="feat-title">50 cuadras listas</div><div class="feat-desc">Bosque ya listo para cosecha.</div></div></div>
+      <div class="feat-card fade-up d3"><div class="feat-icon">🛣</div><div><div class="feat-title">~5 km de vías</div><div class="feat-desc">Carreteras internas para vehículos pesados.</div></div></div>
+      <div class="feat-card fade-up d4"><div class="feat-icon">🥾</div><div><div class="feat-title">~8 km de senderos</div><div class="feat-desc">Senderos ecológicos dentro de la finca.</div></div></div>
+      <div class="feat-card fade-up d4"><div class="feat-icon">🏠</div><div><div class="feat-title">4 viviendas</div><div class="feat-desc">1 casa principal + 3 complementarias.</div></div></div>
+    </div>
   </div>
 </section>
 
-<section class="terreno">
-  <h2 class="section-heading">Recorrer la finca</h2>
-
-  <div class="terreno-layout">
-    <div>
-      <div class="terreno-photo">
-        <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1POAT60exgo4d6h5s6fh3LSFdFNfBocg&ehbc=2E312F" loading="lazy" title="Mapa interactivo de El Laurel"></iframe>
-      </div>
-      <p class="terreno-photo-caption">Área delimitada de la finca — explora el mapa interactivo.</p>
-    </div>
-
-    <div class="feature-list">
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M3 17l5-8 4 5 3-4 6 7H3z"/><path d="M3 20h18"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">~220</div>
-        <div class="stat-label">Cuadras de extensión total</div>
-      </div>
-    </div>
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" style="stroke: var(--water);"><path d="M2 15c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/><path d="M2 19c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2 2-2 4-2"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">2 <span style="color: var(--water);">ríos</span> + 2 <span style="color: var(--water);">arroyos</span></div>
-        <div class="stat-label">Fuentes de agua que atraviesan la finca</div>
-      </div>
-    </div>
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" style="stroke: var(--water);"><path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">~15</div>
-        <div class="stat-label">Afloramientos de agua identificados</div>
-      </div>
-    </div>
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2l4 6h-3l4 6h-3l4 6H6l4-6H7l4-6H8l4-6z"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">~100</div>
-        <div class="stat-label">Cuadras en pino patula, eucalipto y ciprés</div>
-      </div>
-    </div>
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">50</div>
-        <div class="stat-label">Cuadras de bosque ya listas para cosecha</div>
-      </div>
-    </div>
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 21c3-9 4-14 8-18 4 4 5 9 8 18"/><path d="M9 15h6"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">~5<span>km</span></div>
-        <div class="stat-label">De carreteras internas para vehículos pesados</div>
-      </div>
-    </div>
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 19c4-1 5-5 8-6s5 1 8-1"/><circle cx="4" cy="19" r="1"/><circle cx="20" cy="12" r="1"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">~8<span>km</span></div>
-        <div class="stat-label">De senderos ecológicos</div>
-      </div>
-    </div>
-
-    <div class="feature-item">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></svg>
-      </div>
-      <div class="feature-text">
-        <div class="stat-number">4</div>
-        <div class="stat-label">Viviendas en total: 1 casa principal + 3 complementarias</div>
-      </div>
-    </div>
-
-  </div>
-  </div>
-</section>
-
-<section class="infra">
-  <h2 class="section-heading">Comodidad sin depender de nada externo</h2>
-  <div class="section-rule"></div>
-  <p class="infra-sub">Los servicios básicos ya están resueltos en las cuatro viviendas.</p>
-
-  <div class="infra-grid">
-    <div class="infra-item">
-      <div class="infra-icon">
-        <svg viewBox="0 0 24 24" style="stroke: var(--water);"><path d="M12 2C9 6 6 9.5 6 13a6 6 0 0012 0c0-3.5-3-7-6-11z"/><path d="M9 14a3 3 0 003 3"/></svg>
-      </div>
-      <h3>Acueducto veredal</h3>
-      <p>5 puestos de acueducto veredal abastecen la finca de forma continua.</p>
-    </div>
-
-    <div class="infra-item">
-      <div class="infra-icon">
-        <svg viewBox="0 0 24 24"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
-      </div>
-      <h3>Energía eléctrica</h3>
-      <p>Las cuatro viviendas cuentan con conexión eléctrica permanente.</p>
-    </div>
-
-    <div class="infra-item">
-      <div class="infra-icon">
-        <svg viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0120 0"/><path d="M5.5 12a10 10 0 0113 0"/><path d="M9 15.5a5 5 0 016 0"/><circle cx="12" cy="19" r="1"/></svg>
-      </div>
-      <h3>Internet</h3>
-      <p>Conectividad disponible.</p>
-    </div>
+<section class="comodidad-bg" id="comodidad">
+  <div class="section-tag" style="color:var(--terra-c);">Infraestructura y ubicación</div>
+  <h2 class="section-title">La tranquilidad de un lugar que ya lo tiene todo</h2>
+  <p class="section-sub">Una propiedad donde la comodidad hace parte del entorno: servicios instalados, excelente acceso y una ubicación privilegiada que permite disfrutar del campo sin renunciar a lo esencial.</p>
+  <div class="specs-grid">
+    <div class="spec-row fade-up d1"><span class="spec-icon">💧</span><div><div class="spec-label">Acueducto veredal</div><div class="spec-val">5 puestos disponibles</div></div></div>
+    <div class="spec-row fade-up d2"><span class="spec-icon">⚡</span><div><div class="spec-label">Energía eléctrica</div><div class="spec-val">En las 4 viviendas</div></div></div>
+    <div class="spec-row fade-up d3"><span class="spec-icon">📶</span><div><div class="spec-label">Internet</div><div class="spec-val">Conectividad disponible</div></div></div>
+    <div class="spec-row fade-up d1"><span class="spec-icon">📍</span><div><div class="spec-label">Ubicación</div><div class="spec-val">La Unión, Antioquia</div></div></div>
+    <div class="spec-row fade-up d2"><span class="spec-icon">🌄</span><div><div class="spec-label">Distancia</div><div class="spec-val">Aprox. 2 horas de Medellín</div></div></div>
+    <div class="spec-row fade-up d3"><span class="spec-icon">🛣</span><div><div class="spec-label">Acceso</div><div class="spec-val">Fácil acceso por carretera</div></div></div>
   </div>
 </section>
 
@@ -671,14 +182,7 @@
   </button>
 
   <div class="vuelo-content" id="vueloContent">
-    <h2 class="section-heading">Ubicación estratégica</h2>
-    <div class="section-rule"></div>
-    <ul class="vuelo-list">
-      <li>La Unión, Antioquia.</li>
-      <li>Aproximadamente 2 horas de Medellín.</li>
-      <li style="--bullet-color: var(--water);">Entorno de alta riqueza hídrica.</li>
-      <li>Fácil acceso por carretera.</li>
-    </ul>
+    <div class="hero-badge" style="margin-bottom:14px;">Vista aérea</div>
     <a class="vuelo-more-link" href="https://drive.google.com/file/d/1abr9plQbyok5QM3P-3_8qkYmPjBWCPMm/view?usp=sharing" target="_blank" rel="noopener">
       Ver recorrido completo
       <svg viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>
@@ -686,36 +190,35 @@
   </div>
 </section>
 
+<footer>© 2026 El Laurel · La Unión, Antioquia, Colombia</footer>
+
 <script>
-  const vueloVideo = document.getElementById('vueloVideo');
-  const vueloPlayBtn = document.getElementById('vueloPlayBtn');
-  const vueloPlayIcon = document.getElementById('vueloPlayIcon');
-  const vueloScrim = document.querySelector('.vuelo-scrim');
-  const vueloContent = document.getElementById('vueloContent');
-  const PLAY_ICON = '<path d="M6 4l14 8-14 8V4z"/>';
-  const PAUSE_ICON = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+  const vueloVideo=document.getElementById('vueloVideo');
+  const vueloPlayBtn=document.getElementById('vueloPlayBtn');
+  const vueloPlayIcon=document.getElementById('vueloPlayIcon');
+  const vueloScrim=document.querySelector('.vuelo-scrim');
+  const vueloContent=document.getElementById('vueloContent');
+  const PLAY_ICON='<path d="M6 4l14 8-14 8V4z"/>';
+  const PAUSE_ICON='<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
 
-  vueloPlayBtn.addEventListener('click', () => {
-    if (vueloVideo.paused) { vueloVideo.play(); } else { vueloVideo.pause(); }
+  vueloPlayBtn.addEventListener('click',()=>{
+    if(vueloVideo.paused){vueloVideo.play();}else{vueloVideo.pause();}
   });
-
-  vueloVideo.addEventListener('play', () => {
+  vueloVideo.addEventListener('play',()=>{
     vueloPlayBtn.classList.add('is-playing');
-    vueloPlayIcon.innerHTML = PAUSE_ICON;
-    setTimeout(() => {
-      if (!vueloVideo.paused) {
-        vueloScrim.classList.add('is-faded');
-        vueloContent.classList.add('is-faded');
-      }
-    }, 3500);
+    vueloPlayIcon.innerHTML=PAUSE_ICON;
+    setTimeout(()=>{if(!vueloVideo.paused){vueloScrim.classList.add('is-faded');vueloContent.classList.add('is-faded');}},3500);
   });
-
-  vueloVideo.addEventListener('pause', () => {
+  vueloVideo.addEventListener('pause',()=>{
     vueloPlayBtn.classList.remove('is-playing');
-    vueloPlayIcon.innerHTML = PLAY_ICON;
+    vueloPlayIcon.innerHTML=PLAY_ICON;
     vueloScrim.classList.remove('is-faded');
     vueloContent.classList.remove('is-faded');
   });
+
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+  window.addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('scrolled',window.scrollY>50));
 </script>
 
 </body>
