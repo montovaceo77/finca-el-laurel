@@ -390,8 +390,9 @@
     inset: 0;
     z-index: 1;
     background: linear-gradient(180deg, rgba(22,24,26,0.25) 0%, rgba(22,24,26,0.35) 45%, rgba(22,24,26,0.92) 100%);
-    animation: vuelo-fade 6s ease forwards;
+    transition: opacity 1s ease;
   }
+  .vuelo-scrim.is-faded { opacity: 0; }
 
   .vuelo-sound {
     position: absolute;
@@ -432,29 +433,21 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    opacity: 0;
+    opacity: 0.85;
     transition: opacity 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   }
-  .vuelo:hover .vuelo-play { opacity: 0.85; }
-  .vuelo-play:hover { border-color: var(--gold); background: rgba(22,24,26,0.4); opacity: 1 !important; }
+  .vuelo-play:hover { border-color: var(--gold); background: rgba(22,24,26,0.4); opacity: 1; }
   .vuelo-play svg { width: 22px; height: 22px; fill: var(--cream); stroke: none; }
-  .vuelo-play.is-paused { opacity: 0.85; }
 
-  @media (max-width: 720px) {
-    .vuelo-play { opacity: 0.7; }
-  }
+  .vuelo-play.is-playing { opacity: 0; pointer-events: none; }
+  .vuelo:hover .vuelo-play.is-playing { opacity: 0.6; pointer-events: auto; }
 
   .vuelo-content {
     position: relative;
     z-index: 2;
-    animation: vuelo-fade 6s ease forwards;
+    transition: opacity 1s ease;
   }
-
-  @keyframes vuelo-fade {
-    0% { opacity: 1; }
-    65% { opacity: 1; }
-    100% { opacity: 0; }
-  }
+  .vuelo-content.is-faded { opacity: 0; }
 
   .vuelo-list {
     margin-top: 1.8rem;
@@ -649,13 +642,13 @@
 </section>
 
 <section class="vuelo">
-  <video class="vuelo-video" autoplay muted loop playsinline id="vueloVideo">
+  <video class="vuelo-video" muted loop playsinline id="vueloVideo">
     <source src="Video%201.%20Laurel.mp4" type="video/mp4">
   </video>
   <div class="vuelo-scrim"></div>
 
-  <button class="vuelo-play" id="vueloPlayBtn" onclick="const v=document.getElementById('vueloVideo'); const b=document.getElementById('vueloPlayBtn'); if(v.paused){v.play(); b.classList.remove('is-paused'); b.querySelector('svg').innerHTML='<path d=\'M6 4h4v16H6zM14 4h4v16h-4z\'/>';}else{v.pause(); b.classList.add('is-paused'); b.querySelector('svg').innerHTML='<path d=\'M6 4l14 8-14 8V4z\'/>';}">
-    <svg viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+  <button class="vuelo-play" id="vueloPlayBtn">
+    <svg id="vueloPlayIcon" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg>
   </button>
 
   <button class="vuelo-sound" onclick="const v=document.getElementById('vueloVideo'); v.muted=!v.muted; this.querySelector('span').textContent = v.muted ? 'Activar sonido' : 'Silenciar';">
@@ -663,7 +656,7 @@
     <span>Activar sonido</span>
   </button>
 
-  <div class="vuelo-content">
+  <div class="vuelo-content" id="vueloContent">
     <div class="section-eyebrow">Ubicación</div>
     <h2 class="section-heading">Ubicación estratégica</h2>
     <div class="section-rule"></div>
@@ -675,6 +668,38 @@
     </ul>
   </div>
 </section>
+
+<script>
+  const vueloVideo = document.getElementById('vueloVideo');
+  const vueloPlayBtn = document.getElementById('vueloPlayBtn');
+  const vueloPlayIcon = document.getElementById('vueloPlayIcon');
+  const vueloScrim = document.querySelector('.vuelo-scrim');
+  const vueloContent = document.getElementById('vueloContent');
+  const PLAY_ICON = '<path d="M6 4l14 8-14 8V4z"/>';
+  const PAUSE_ICON = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+
+  vueloPlayBtn.addEventListener('click', () => {
+    if (vueloVideo.paused) { vueloVideo.play(); } else { vueloVideo.pause(); }
+  });
+
+  vueloVideo.addEventListener('play', () => {
+    vueloPlayBtn.classList.add('is-playing');
+    vueloPlayIcon.innerHTML = PAUSE_ICON;
+    setTimeout(() => {
+      if (!vueloVideo.paused) {
+        vueloScrim.classList.add('is-faded');
+        vueloContent.classList.add('is-faded');
+      }
+    }, 3500);
+  });
+
+  vueloVideo.addEventListener('pause', () => {
+    vueloPlayBtn.classList.remove('is-playing');
+    vueloPlayIcon.innerHTML = PLAY_ICON;
+    vueloScrim.classList.remove('is-faded');
+    vueloContent.classList.remove('is-faded');
+  });
+</script>
 
 </body>
 </html>
